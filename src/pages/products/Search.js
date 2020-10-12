@@ -43,16 +43,10 @@ const tailLayout = {
 };
 
 const Search = ({ form, onSearch }) => {
-  // 销售方式
-  const [bsaletype, setBsaletype] = useState([]);
   // 销售状态
   const [salestatus, setSalestatus] = useState([]);
   // 所在城市
   const [city, setCity] = useState([]);
-  // 检测报告
-  const [detection, setDetection] = useState([]);
-  // 包名
-  const [packageName, setPackageName] = useState([]);
 
   useEffect(() => {
     Promise.all([
@@ -69,17 +63,13 @@ const Search = ({ form, onSearch }) => {
         detectionRes = {},
         packageNameRes = {},
       ] = res;
-      setBsaletype(bsaletypeRes.data || []);
       setSalestatus(salestatusRes.data || []);
       setCity(cityRes.data || []);
-      setDetection(detectionRes.data || []);
-      setPackageName(packageNameRes.data || []);
     });
   }, []);
 
   const onFinish = fieldsValue => {
     console.log(fieldsValue);
-
     onSearch();
   };
 
@@ -93,20 +83,20 @@ const Search = ({ form, onSearch }) => {
       name="control-hooks"
       onFinish={onFinish}
     >
-      {/* <Form */}
       <Row>
         <Col span={8}>
-          <FormItem label="采购日期" name="purchaseDate">
+          <FormItem label="付款完成时间：" name="payment_Time">
             <RangePicker />
           </FormItem>
         </Col>
 
         <Col span={8}>
-          <FormItem label="库存状态" name="gender">
-            <Select placeholder="全部">
-              <Option value="male">male</Option>
-              <Option value="female">female</Option>
-              <Option value="other">other</Option>
+          <FormItem label="付款状态" name="payment">
+            <Select allowClear placeholder="全部">
+              <Option value="1">未申请</Option>
+              <Option value="2">已申请</Option>
+              <Option value="3">部分付款</Option>
+              <Option value="4">付款完成</Option>
               {/*
               {salestatus.map(item => (
                 <Option key={item.index}>{item.description}</Option>
@@ -114,10 +104,11 @@ const Search = ({ form, onSearch }) => {
             </Select>
           </FormItem>
         </Col>
+
         <Col span={8}>
-          <FormItem label="库存天数" name="inventoryDays">
-            <RangePicker />
-          </FormItem>
+          <Form.Item name="VIN" {...tailLayout}>
+            <Input placeholder="VIN后六位/车源编号/库存编号/品牌车系" />
+          </Form.Item>
         </Col>
       </Row>
 
@@ -142,10 +133,9 @@ const Search = ({ form, onSearch }) => {
         </Col>
         <Col span={8}>
           <FormItem label="销售门店：" name="salesStore">
-            <Select placeholder="全部">
-              <Option value="yuhong">沈阳于洪店</Option>
-              <Option value="dadong">沈阳大东店</Option>
-              <Option value="tiexi">沈阳铁西店</Option>
+            <Select placeholder="全部" allowClear mode="multiple">
+              <Option value="shenyang">沈阳门店</Option>
+              <Option value="zhengzhou">郑州门店</Option>
               {/*
               {salestatus.map(item => (
                 <Option key={item.index}>{item.description}</Option>
@@ -155,10 +145,10 @@ const Search = ({ form, onSearch }) => {
         </Col>
         <Col span={8}>
           <FormItem label="品牌车系" name="brandCars">
-            <Select placeholder="全部">
+            <Select placeholder="全部" allowClear mode="multiple">
               <Option value="luhu">路虎</Option>
               <Option value="xiandai">现代</Option>
-              <Option value="xuanyi">轩逸</Option>
+              <Option value="kaluola">广汽丰田卡罗拉</Option>
               {/*
               {salestatus.map(item => (
                 <Option key={item.index}>{item.description}</Option>
@@ -169,32 +159,26 @@ const Search = ({ form, onSearch }) => {
       </Row>
       <Row>
         <Col span={8}>
-          <FormItem label="销售状态" name="salestatus">
-            <Select placeholder="全部">
-              <Option value="zaishou">在售</Option>
-              <Option value="yishou">已售</Option>
-              <Option value="daiding">待定</Option>
-              {/*
-              {salestatus.map(item => (
-                <Option key={item.index}>{item.description}</Option>
-              ))} */}
-            </Select>
-          </FormItem>
-        </Col>
-        <Col span={8}>
-          <Form.Item name="VIN" {...tailLayout}>
-            <Input placeholder="VIN后六位/车源编号/库存编号/品牌车系" />
+          <Form.Item name="purchase_Time" label="采购时间">
+            <RangePicker />
           </Form.Item>
         </Col>
       </Row>
-      <Row>
-        <Col className={styles.btnGroup} span={24}>
+
+      <Row style={{ marginBottom: '20px' }}>
+        <Col span={18} style={{ textAlign: 'center' }}>
           <Button type="primary" htmlType="submit">
             查询
           </Button>
-          <Button type="primary" onClick={() => form.resetFields()}>
+          <Button
+            style={{ marginLeft: '10px' }}
+            onClick={() => form.resetFields()}
+          >
             重置
           </Button>
+        </Col>
+        <Col span={6} style={{ textAlign: 'right', paddingRight: '12px' }}>
+          <Button type="primary">导出</Button>
         </Col>
       </Row>
     </Form>

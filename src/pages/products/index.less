@@ -1,7 +1,24 @@
-
-.normal {
+.form {
+  :global {
+    .ant-form-item {
+      margin-bottom: 12px;
+    }
+  }
+  .btnGroup {
+    display: flex;
+    justify-content: center;
+    button {
+      margin-right: 10px;
+    }
+  }
 }
-
-.title {
-  background: rgb(121, 242, 157);
+.tableInfo {
+  :global {
+    .ant-table-tbody > tr > td {
+      border-bottom: 1px solid #e8e8e8;
+      transition: all 0.3s, border 0s;
+      padding: 0 16px !important;
+      height: 64px;
+    }
+  }
 }
