@@ -1,30 +1,304 @@
-import {
-  Button,
-  Card,
-  Divider,
-  Form,
-  Input,
-  Modal,
-  Select,
-  Table,
-  message,
-} from 'antd';
+import { Card, Form, Input, Modal, Table, message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import {
-  batchupdatestatus,
-  fetchExport,
-  getVehiclelist,
-  querybatchpackageinfo,
-} from './server';
 
 import Search from './Search';
+import { getVehiclelist } from './server';
 import styles from './index.less';
 
 const Page = () => {
   const [form] = Form.useForm();
 
   // 列表数据
-  const [dataSource, setDataSource] = useState([]);
+  // const [dataSource, setDataSource] = useState([]);
+  const [dataSource, setDataSource] = useState([
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸1',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸2',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸3',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸4',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸45',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸5',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸6',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸7',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸8',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸9',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸11',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸12',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸123',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸14',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸15',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸16',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸17',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸18',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '1',
+      vinCode: '0000111',
+      unifiedNumber: '大众朗逸19',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+    {
+      key: '2',
+      vinCode: '0000311',
+      unifiedNumber: '大众朗2逸200',
+      batchPackageName: '0000111',
+      qa: '北京',
+      aa: '宝马4s',
+      ss: '在售',
+      sss: '在库',
+      ssss: '5天',
+      hh: '库区库位',
+      caigou: '采购价',
+    },
+  ]);
+
   // 分页数据
   const [pagination, setPagination] = useState({
     current: 1,
@@ -32,30 +306,22 @@ const Page = () => {
     total: 0,
   });
 
-  // 批售包名
-  const [packageinfo, setPackageinfo] = useState([]);
-  // 批售提交显示与否
-  const [batchVisible, setBatchVisible] = useState(false);
-
-  // 参数
-  const [paramsFinal, setParamsFinal] = useState();
-
   // 初始化数据
-  const initData = () => {
-    handleSearch();
-    // querybatchpackageinfo().then(res => {
-    //   if (res.code === 200) {
-    //     setPackageinfo(res.data);
-    //   }
-    // });
-  };
   useEffect(() => {
-    initData();
-  }, []);
+    handleSearch();
+  }, [pagination.current, pagination.pageSize]);
 
+  const handleSelectSearch = () => {
+    //  当page或size改变时，自动刷一下接口
+    setPagination({
+      current: 1,
+      pageSize: 20,
+      total: 0,
+    });
+  };
   // 查询列表
   const handleSearch = async (
-    pageIndex = 1,
+    pageIndex = pagination.current,
     pageSize = pagination.pageSize,
   ) => {
     // Should format date value before submit.
@@ -73,7 +339,7 @@ const Page = () => {
 
     const paramsFinal$ = { ...params, pageSize, pageIndex };
     console.log(paramsFinal$, 'paramsFinal$');
-    const res = await getVehiclelist(paramsFinal$);
+    const res = await getVehiclelist(paramsFinal$); // 获取table列表数据
     if (res && res.code === 200) {
       setDataSource(res.data.pagedItems);
       setPagination({
@@ -81,9 +347,14 @@ const Page = () => {
         pageSize: res.data.pageSize,
         total: res.data.totalCount,
       });
-      setParamsFinal(paramsFinal$);
     }
   };
+
+  const pagerChange = (page, size) =>
+    setPagination({
+      current: page,
+      pageSize: size,
+    });
 
   const columns = [
     {
@@ -104,15 +375,18 @@ const Page = () => {
 
   return (
     <Card>
-      <Search onSearch={handleSearch} form={form} />
+      <Search onSearch={handleSelectSearch} form={form} />
 
       <div className={styles.tableInfo}>
         <Table
           rowKey="unifiedNumber"
           dataSource={dataSource}
           pagination={{
-            onChange: handleSearch,
+            showQuickJumper: true,
+            showSizeChanger: true,
             ...pagination,
+            onChange: pagerChange,
+            onShowSizeChange: pagerChange,
             showTotal: total => `查询结果: ${pagination.total}条`,
           }}
           columns={columns}
